@@ -1,0 +1,23 @@
+.block-margins {
+    margin: 10px;
+}
+.price-text {
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333; 
+    margin-bottom: 10px;
+}
+
+.price-difference-text {
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 10px;
+}
+
+.positive {
+    color: green; /* Green color for positive numbers */
+}
+
+.negative {
+    color: red; /* Red color for negative numbers */
+}

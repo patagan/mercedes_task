@@ -1,0 +1,52 @@
+# Dependency directory
+car-management-app/node_modules/
+
+# Compiled output
+car-management-app/dist/
+car-management-app/dist-test/
+
+# IDE files
+car-management-app/.idea/
+car-management-app/.vscode/
+
+# npm cache
+car-management-app/.npm/
+
+# Yarn cache
+car-management-app/.yarn/
+car-management-app/.yarn-integrity
+
+# Angular generated files
+car-management-app/*.js
+car-management-app/*.js.map
+car-management-app/*.d.ts
+
+# Angular logs
+car-management-app/*.log
+
+# Angular test files
+#car-management-app/*.spec.ts
+
+# Spring Boot Gradle Project - mercedes-kfz
+
+# Gradle
+mercedes-kfz/build/
+mercedes-kfz.gradle/
+
+# IDE files
+mercedes-kfz/.idea/
+mercedes-kfz/.vscode/
+
+# IntelliJ IDEA
+mercedes-kfz/*.iws
+mercedes-kfz/*.ipr
+
+# Spring Boot logs
+mercedes-kfz/logs/
+mercedes-kfz/*.log
+
+# Compiled Java class files
+mercedes-kfz/*.class
+
+# Dependency directory
+mercedes-kfz/bin/

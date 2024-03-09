@@ -1,0 +1,16 @@
+<div class="login-container">
+    <div class="login-box p-shadow-3">
+        <h2>Sign Up</h2>
+        <form>
+        <div class="p-field">
+            <label for="username">Username</label>
+            <input type="text" id="username" pInputText placeholder="Enter your username" [(ngModel)]="userLogin.username" name="username">
+        </div>
+        <div class="p-field">
+            <label for="password">Password</label>
+            <p-password id="password" [toggleMask]="true" placeholder="Enter your password" [(ngModel)]="userLogin.password" name="password"/>
+        </div>
+        <button type="submit" pButton label="Sign Up" class="p-button-primary" (click)="signup()"></button>
+        </form>
+    </div>
+</div>

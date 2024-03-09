@@ -1,0 +1,33 @@
+<p-dialog header="New Car Configuration" [(visible)]="displayDialog" [modal]="true" [closable]="false" (onShow)="onDialogShow()" (onHide)="onDialogClose()" [contentStyle]="{overflow: 'visible'}">
+
+    <form #carForm="ngForm" (ngSubmit)="onSubmit(carForm)">
+        <div class="p-grid p-fluid">
+            <div class="block-margins price-text">Price: {{selectedCar.price}}</div>
+            <div class="block-margins price-difference-text"  [ngClass]="{ 'positive': priceDifference >= 0, 'negative': priceDifference < 0 }">{{ priceDifference > 0 ? '+' : '' }} {{priceDifference}}</div>
+            <div class="p-col-4 block-margins">
+                <label for="class">Class</label>
+                <p-dropdown [(ngModel)]="selectedCar.carClass" [options]="carAvailableFeatures.carClasses" optionLabel="name" placeholder="Select a Class" name="class" [required]="true" (onChange)="onConfigurationPrice()"></p-dropdown>
+            </div>
+            
+            <div class="p-col-4 block-margins">
+                <label for="type">Type</label>
+                <p-dropdown [(ngModel)]="selectedCar.carType" [options]="carAvailableFeatures.carTypes" optionLabel="name" placeholder="Select a Type" name="type" [required]="true" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></p-dropdown>
+            </div>
+            
+            <div class="p-col-4 block-margins">
+                <label for="motor">Motor</label>
+                <p-dropdown [(ngModel)]="selectedCar.carMotor" [options]="carAvailableFeatures.carMotors" optionLabel="name" placeholder="Select a Motor" name="motor" [required]="true" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></p-dropdown>
+            </div>
+            <div class="p-col-4 block-margins">
+                <label for="color">Color</label>
+                <p-dropdown [(ngModel)]="selectedCar.carColor" [options]="carAvailableFeatures.carColors" optionLabel="name" placeholder="Select a Color" name="color" [required]="true" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></p-dropdown>
+            </div>
+            <div class="p-col-4 block-margins">
+                <label for="extras">Extras</label>
+                <p-multiSelect [(ngModel)]="selectedCar.carExtras" [options]="carAvailableFeatures.carExtras"  optionLabel="name" placeholder="Select a Extra" name="extra" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></p-multiSelect>
+            </div>
+        </div>
+        <button pButton type="submit" label="Save" class="block-margins"></button>
+        <button pButton type="button" label="Cancel" (click)="cancel()" class="block-margins"></button>
+    </form>
+</p-dialog>

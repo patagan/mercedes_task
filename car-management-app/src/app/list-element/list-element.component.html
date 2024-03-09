@@ -1,0 +1,16 @@
+<p-card header="Advanced Card" subheader="second header" [style]="{ width: '360px' }">
+    <ng-template pTemplate="subheader">
+        <p>{{configurationInformation.carClass.featureType}} : {{configurationInformation.carClass.name}}</p>
+        <p>{{configurationInformation.carType.featureType}} : {{configurationInformation.carType.name}}</p>
+        <p>{{configurationInformation.carMotor.featureType}} : {{configurationInformation.carMotor.name}}</p>
+        <p>{{configurationInformation.carColor.featureType}} : {{configurationInformation.carColor.name}}</p>
+        <p>EXTRAS:</p>
+        @for (extra of configurationInformation.carExtras; track extra) {
+            <p class="extra-list">{{extra.name}}</p>
+        } 
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Edit" icon="pi pi-pencil" (click)="onEdit()"></p-button>
+        <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="onDelete()" [style]="{ 'margin-left': '.5em' }"></p-button>
+    </ng-template>
+</p-card>

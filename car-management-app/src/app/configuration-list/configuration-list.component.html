@@ -1,0 +1,10 @@
+<app-header></app-header>
+<button pButton label="New Car" (click)="showDialogToAdd()" [style]="{ 'margin-left': '1em' }"></button>
+<div class="row">
+    @for (carConfiguration of cars; track carConfiguration) {
+        <app-list-element [configurationInformation] = "carConfiguration" class="column" (editEvent)="showDialogToEdit($event)" (deleteEvent)="onDelete($event)"/>
+    } @empty {
+        Empty list of Configurations
+    }
+</div>
+<app-configuration-dialog [selectedCar] = "selectedCar" [displayDialog] = "displayDialog" (showEvent)="cancel($event)" (saveEvent)="saveConfiguration($event)" (updateSelectedCarEvent)="onUpdateSelectedCar($event)"></app-configuration-dialog>

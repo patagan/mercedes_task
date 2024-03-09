@@ -1,0 +1,27 @@
+jwt:
+  secret: mysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecretmysupersecret
+
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:mysql://localhost:3306/kfz
+    username: myuser
+    password: mypassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    root: INFO
+server:
+  tomcat:
+    uri-encoding: UTF-8
+
