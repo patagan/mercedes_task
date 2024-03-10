@@ -15,7 +15,7 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 })
 export class ListElementComponent {
   @Input()
-  configurationInformation!: CarConfiguration;
+  configurationInformation: CarConfiguration = new CarConfiguration();
 
   @Output() 
   editEvent = new EventEmitter<any>();

@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MessageService } from 'primeng/api';
 import { ConfigurationDialogComponent } from './configuration-dialog.component';
+import { CarConfiguration } from '../shared/car.model';
 
 describe('ConfigurationDialogComponent', () => {
   let component: ConfigurationDialogComponent;
@@ -8,7 +12,11 @@ describe('ConfigurationDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfigurationDialogComponent]
+      providers:[MessageService],
+      imports: [ConfigurationDialogComponent,
+        FormsModule,
+        ButtonModule,
+        HttpClientTestingModule]
     })
     .compileComponents();
     
@@ -18,6 +26,8 @@ describe('ConfigurationDialogComponent', () => {
   });
 
   it('should create', () => {
+    component.selectedCar = new CarConfiguration()
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });
