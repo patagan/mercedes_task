@@ -1,4 +1,4 @@
-<p-card header="Advanced Card" subheader="second header" [style]="{ width: '360px' }">
+<p-card [header]="'Configuration ' + configurationInformation.id" [style]="{ width: '360px' }">
     <ng-template pTemplate="subheader">
         <p>{{configurationInformation.carClass.featureType}} : {{configurationInformation.carClass.name}}</p>
         <p>{{configurationInformation.carType.featureType}} : {{configurationInformation.carType.name}}</p>
