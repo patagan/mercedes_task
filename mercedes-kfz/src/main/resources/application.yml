@@ -24,4 +24,11 @@ logging:
 server:
   tomcat:
     uri-encoding: UTF-8
+  port: 8080
+springdoc:
+  packagesToScan: com.mvp.kfz
 
+openapi:
+  title: Mercedes kfz API
+  version: 1.0.0
+  description: This is a RESTful service to retrieve Car configurations

@@ -4,12 +4,11 @@ import com.mvp.kfz.data.entity.UserConfiguration;
 import com.mvp.kfz.service.ConfigurationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserConfigurationController {
 

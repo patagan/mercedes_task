@@ -1,17 +1,13 @@
 package com.mvp.kfz.controller;
 
-import com.mvp.kfz.data.entity.CarFeature;
-import com.mvp.kfz.data.entity.UserConfiguration;
 import com.mvp.kfz.model.FeatureCategories;
 import com.mvp.kfz.service.CarFeatureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class ConfigurableFeaturesController {
 
