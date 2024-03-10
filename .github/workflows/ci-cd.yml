@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    working-directory: ./car-management-app
 
     steps:
       - name: Checkout code
@@ -17,10 +16,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20.11.1'
 
       - name: Install dependencies
+        working-directory: ./car-management-app
         run: cd npm install
 
       - name: Build
+        working-directory: ./car-management-app
         run: npm test
