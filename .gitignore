@@ -1,6 +1,6 @@
 # Dependency directory
 car-management-app/node_modules/
-
+car-management-app/.angular/*
 # Compiled output
 car-management-app/dist/
 car-management-app/dist-test/
@@ -50,3 +50,4 @@ mercedes-kfz/*.class
 
 # Dependency directory
 mercedes-kfz/bin/
+mercedes-kfz/.gradle/*
