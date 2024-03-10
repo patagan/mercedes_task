@@ -25,3 +25,37 @@ jobs:
       - name: Build
         working-directory: ./car-management-app
         run: npm test
+
+  build-backend:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build with Gradle
+        working-directory: ./mercedes-kfz
+        run: ./gradlew build
+
+  test-backend:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Test with Gradle
+        working-directory: ./mercedes-kfz
+        run: ./gradlew test
