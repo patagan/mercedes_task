@@ -60,7 +60,7 @@ public class UserConfigurationController {
         return ResponseEntity.ok(id);
     }
 
-    @Operation(summary = "Get configuration price", description = "Calculate the price of a user configuration")
+    @Operation(summary = "Post configuration price", description = "Calculate the price of a user configuration")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User configuration with calculated price or adapted basic configuration with price",
                     content = { @Content(mediaType = "application/json",

@@ -5,6 +5,11 @@ import com.mvp.kfz.data.LoginOutput;
 import com.mvp.kfz.data.entity.Users;
 import com.mvp.kfz.service.IUserService;
 import com.mvp.kfz.util.JwtTokenUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +28,13 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtTokenUtil jwtTokenUtil;
+
+    @Operation(summary = "Login", description = "Login in using username and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User details and JWT token",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = LoginOutput.class))})
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginOutput> login(@RequestBody LoginInput loginInput) {
         try {
@@ -42,6 +54,12 @@ public class LoginController {
         return ResponseEntity.status(UNAUTHORIZED).build();
     }
 
+    @Operation(summary = "Register or signup", description = "Sign up as new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "new assigned ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Long.class))})
+    })
     @PostMapping("/register")
     public ResponseEntity<Long> register(@RequestBody LoginInput loginInput) {
 
@@ -53,6 +71,12 @@ public class LoginController {
         return ResponseEntity.ok(userId);
     }
 
+    @Operation(summary = "Get user by ID", description = "Get user by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found user by ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Users.class))})
+    })
     @GetMapping(path = "/myUser/{id}")
     public ResponseEntity<Users> myUser(@PathVariable("id") Long userId) {
         Users foundUsers = iUserService.getUserById(userId);
