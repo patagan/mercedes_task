@@ -6,18 +6,14 @@ import com.mvp.kfz.data.entity.Users;
 import com.mvp.kfz.model.FeatureTypes;
 import com.mvp.kfz.repository.CarFeatureRepository;
 import com.mvp.kfz.repository.UserConfigurationRepository;
-import com.mvp.kfz.repository.UserRepository;
 import com.mvp.kfz.service.ConfigurationService;
+import com.mvp.kfz.service.ContextUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 @Service
@@ -28,17 +24,17 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     private final CarFeatureRepository carFeatureRepository;
 
-    private final UserRepository userRepository;
+    private final ContextUserService contextUserService;
 
     @Override
     public List<UserConfiguration> getConfigurations() {
-        Users users = retrieveContextUser();
+        Users users = contextUserService.retrieveContextUser();
         return userConfigurationRepository.findByUserId(users.getId());
     }
 
     @Override
     public UserConfiguration addConfiguration(UserConfiguration newConfiguration) {
-        newConfiguration.setUserId(retrieveContextUser().getId());
+        newConfiguration.setUserId(contextUserService.retrieveContextUser().getId());
         validateCarFeatures(newConfiguration);
         return userConfigurationRepository.save(newConfiguration);
     }
@@ -58,7 +54,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
                 () -> {throw new IllegalArgumentException();});
         List<CarFeature> extras = new ArrayList<>();
         for( CarFeature extra : newConfiguration.getCarExtras()) {
-            carFeatureRepository.findById(extra.getId()).ifPresent(foundExtra -> extras.add(foundExtra));
+            carFeatureRepository.findById(extra.getId()).ifPresent(extras::add);
         }
         newConfiguration.setCarExtras(extras);
     }
@@ -71,14 +67,8 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         };
     }
 
-    private Users retrieveContextUser() {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users foundUsers = userRepository.findByUsername(principal.getUsername()).orElseThrow(() -> new UsernameNotFoundException("No user found"));
-        return foundUsers;
-    }
-
     private void isUserCreatorOfProduct(UserConfiguration foundUserConfiguration) {
-        Users users = retrieveContextUser();
+        Users users = contextUserService.retrieveContextUser();
         if(!users.getId().equals(foundUserConfiguration.getUserId())) {
             throw new IllegalCallerException("You are not the creator of the configuration " + foundUserConfiguration.getId());
         }
@@ -93,7 +83,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public UserConfiguration getConfigurationPrice(UserConfiguration newUserConfiguration) {
-        if(Objects.isNull(newUserConfiguration.getCarClass().getId()) || newUserConfiguration.getCarClass().getId() <= 0) {
+        if(Objects.isNull(newUserConfiguration.getCarClass()) || Objects.isNull(newUserConfiguration.getCarClass().getId()) || newUserConfiguration.getCarClass().getId() <= 0) {
             throw new IllegalArgumentException("Car class must be set");
         }
         return processUserConfigurationWithCalculatedPrice(newUserConfiguration);
@@ -121,8 +111,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     private void processCarConfigurationFeature(UserConfiguration newUserConfiguration, CarFeature carFeature) {
-        FeatureTypes featureType = carFeature.getFeatureType();
-        if (Objects.isNull(carFeature.getId()) || carFeature.getId() <= 0) {
+        if ((Objects.isNull(carFeature.getId()) || carFeature.getId() <= 0)) {
             carFeature = carFeatureRepository.findFirstByFeatureTypeOrderByPriceAsc(carFeature.getFeatureType());
         } else {
             carFeature = carFeatureRepository.findByIdAndFeatureType(carFeature.getId(),carFeature.getFeatureType())
@@ -130,21 +119,12 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         }
         newUserConfiguration.setPrice(newUserConfiguration.getPrice() + carFeature.getPrice());
 
-        switch (featureType) {
-            case CLASS:
-                newUserConfiguration.setCarClass(carFeature);
-                break;
-            case TYPE:
-                newUserConfiguration.setCarType(carFeature);
-                break;
-            case MOTOR:
-                newUserConfiguration.setCarMotor(carFeature);
-                break;
-            case COLOR:
-                newUserConfiguration.setCarColor(carFeature);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid Feature Type" + featureType);
+        switch (carFeature.getFeatureType()) {
+            case CLASS -> newUserConfiguration.setCarClass(carFeature);
+            case TYPE -> newUserConfiguration.setCarType(carFeature);
+            case MOTOR -> newUserConfiguration.setCarMotor(carFeature);
+            case COLOR -> newUserConfiguration.setCarColor(carFeature);
+            default -> throw new IllegalArgumentException("Invalid Feature Type" + carFeature.getFeatureType());
         }
     }
 }

@@ -27,7 +27,7 @@
                 <p-multiSelect [(ngModel)]="selectedCar.carExtras" [options]="carAvailableFeatures.carExtras"  optionLabel="name" placeholder="Select a Extra" name="extra" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></p-multiSelect>
             </div>
         </div>
-        <button pButton type="submit" label="Save" class="block-margins"></button>
+        <button pButton type="submit" label="Save" class="block-margins" [disabled]="!(selectedCar.carClass.id > 0)" (onChange)="onConfigurationPrice()"></button>
         <button pButton type="button" label="Cancel" (click)="cancel()" class="block-margins"></button>
     </form>
 </p-dialog>

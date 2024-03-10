@@ -3,7 +3,7 @@ package com.mvp.kfz.controller;
 import com.mvp.kfz.data.LoginInput;
 import com.mvp.kfz.data.LoginOutput;
 import com.mvp.kfz.data.entity.Users;
-import com.mvp.kfz.service.IUserService;
+import com.mvp.kfz.service.UserService;
 import com.mvp.kfz.util.JwtTokenUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
-    private final IUserService iUserService;
+    private final UserService iUserService;
 
     private final PasswordEncoder passwordEncoder;
 
