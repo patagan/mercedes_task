@@ -24,8 +24,14 @@ export class ConfigurationDialogComponent {
   @Input()
   displayDialog!: boolean;
 
+  @Input()
+  carAvailableFeatures:CarFeatures=new CarFeatures()
+
   @Output() 
   showEvent = new EventEmitter<any>();
+
+  @Output() 
+  cancelEvent = new EventEmitter<any>();
 
   @Output() 
   saveEvent = new EventEmitter<any>();
@@ -35,29 +41,19 @@ export class ConfigurationDialogComponent {
 
   priceDifference:number = 0;
 
-  carAvailableFeatures:CarFeatures=new CarFeatures()
-
   constructor(private carService: CarService, private messageService: MessageService) { }
 
   onDialogShow() {
-    this.carService.getCarFeatures().subscribe({
-      next: (response) => {
-        this.carAvailableFeatures = response;
-      },
-      error: (e) => {
-        console.error('Login failed:', e);
-        this.messageService.add({severity:'error', summary:'Error', detail:'Failed to get configurations'});
-    
-      }
-    });
+    this.showEvent.emit()
   }
+  
   onDialogClose() {
     this.priceDifference = 0;
     this.updateSelectedCarEvent.emit(new CarConfiguration())
 
   }
   cancel() {
-    this.showEvent.emit(!this.displayDialog);
+    this.cancelEvent.emit(!this.displayDialog);
   }
 
   onSubmit(carForm: NgForm) {

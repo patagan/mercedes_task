@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarConfiguration } from '../shared/car.model';
+import { CarConfiguration, CarFeatures } from '../shared/car.model';
 import { CarService } from '../shared/car.service';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -22,6 +22,7 @@ export class ConfigurationListComponent implements OnInit {
   cars: CarConfiguration[] = [];
   selectedCar: CarConfiguration =new CarConfiguration();
   displayDialog: boolean = false;
+  carAvailableFeatures: CarFeatures = new CarFeatures();
 
   constructor(private carService: CarService, private messageService: MessageService, private router: Router) { }
 
@@ -33,6 +34,17 @@ export class ConfigurationListComponent implements OnInit {
     this.displayDialog = false
   }
 
+  getAllCarFeatures() {
+    this.carService.getCarFeatures().subscribe({
+      next: (response) => {
+        this.carAvailableFeatures = response;
+      },
+      error: (e) => {
+        this.handleHttpError(e, 'Failed to get all configurations');
+      }
+    });
+  }
+
   saveConfiguration(data: any) {
     this.carService.saveCar(this.selectedCar).subscribe({
       next: () => {
@@ -40,7 +52,7 @@ export class ConfigurationListComponent implements OnInit {
         this.retrieveConfigurations()
       },
       error: (e) => {
-        this.messageService.add({severity:'error', summary:'Error', detail:'Failed to get save'});
+        this.handleHttpError(e, 'Failed to save user configuration');
       }
     });
     this.displayDialog = false
@@ -52,15 +64,31 @@ export class ConfigurationListComponent implements OnInit {
         this.cars = response;
       },
       error: (e) => {
-        if(e.status === 401) {
-          this.messageService.add({severity:'warn', summary:'Warn', detail:'Session expired'});
-          
-          this.router.navigate(['login'])
-        } else {
-          this.messageService.add({severity:'error', summary:'Error', detail:'Failed to get configurations'});
-        }
+        this.handleHttpError(e, 'Failed to get configurations');
       }
     });
+  }
+
+  onDelete(data: any) {
+    this.carService.deleteCar(data).subscribe({
+      next: () => {
+        this.messageService.add({severity:'success', summary:'Success', detail:'Configuration  deleted:' + data});
+        this.retrieveConfigurations();
+      },
+      error: (e) => {
+        this.handleHttpError(e, 'Failed to delete configuration with id: ' + data);
+      }
+    });
+  }
+
+  handleHttpError(error:any, errorDetail:string) {
+    if(error.status === 401) {
+      this.messageService.add({severity:'warn', summary:'Warn', detail:'Session expired'});
+      
+      this.router.navigate(['login'])
+    } else {
+      this.messageService.add({severity:'error', summary:'Error', detail:errorDetail});
+    }
   }
 
   showDialogToAdd() {
@@ -71,18 +99,6 @@ export class ConfigurationListComponent implements OnInit {
   showDialogToEdit(data: any) {
     this.selectedCar = { ...data };
     this.displayDialog = true;
-  }
-
-  onDelete(data: any) {
-    this.carService.deleteCar(data).subscribe({
-      next: () => {
-        this.messageService.add({severity:'success', summary:'Success', detail:'Configuration  deleted:' + data});
-        this.retrieveConfigurations();
-      },
-      error: (e) => {
-        this.messageService.add({severity:'error', summary:'Error', detail:'Failed to delete configuration with id: ' + data});
-      }
-    });
   }
 
   onUpdateSelectedCar(data:any) {

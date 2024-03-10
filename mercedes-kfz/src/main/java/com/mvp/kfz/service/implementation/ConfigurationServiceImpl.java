@@ -96,11 +96,15 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         if(Objects.isNull(newUserConfiguration.getCarClass().getId()) || newUserConfiguration.getCarClass().getId() <= 0) {
             throw new IllegalArgumentException("Car class must be set");
         }
+        return processUserConfigurationWithCalculatedPrice(newUserConfiguration);
+    }
+
+    private UserConfiguration processUserConfigurationWithCalculatedPrice(UserConfiguration newUserConfiguration) {
         newUserConfiguration.setPrice(0F);
-        processCarConfiguration(newUserConfiguration, newUserConfiguration.getCarClass());
-        processCarConfiguration(newUserConfiguration, newUserConfiguration.getCarType());
-        processCarConfiguration(newUserConfiguration, newUserConfiguration.getCarMotor());
-        processCarConfiguration(newUserConfiguration, newUserConfiguration.getCarColor());
+        processCarConfigurationFeature(newUserConfiguration, newUserConfiguration.getCarClass());
+        processCarConfigurationFeature(newUserConfiguration, newUserConfiguration.getCarType());
+        processCarConfigurationFeature(newUserConfiguration, newUserConfiguration.getCarMotor());
+        processCarConfigurationFeature(newUserConfiguration, newUserConfiguration.getCarColor());
         processCarExtras(newUserConfiguration);
         return newUserConfiguration;
     }
@@ -108,7 +112,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     private void processCarExtras(UserConfiguration newUserConfiguration) {
         List<CarFeature> foundExtras = new ArrayList<>();
         for(CarFeature extra : newUserConfiguration.getCarExtras()) {
-            CarFeature foundFeature = carFeatureRepository.findById(extra.getId())
+            CarFeature foundFeature = carFeatureRepository.findByIdAndFeatureType(extra.getId(), FeatureTypes.EXTRAS)
                     .orElseThrow(() -> new IllegalArgumentException("No Type Found"));
             foundExtras.add(foundFeature);
             newUserConfiguration.setPrice(newUserConfiguration.getPrice() + foundFeature.getPrice());
@@ -116,12 +120,12 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         newUserConfiguration.setCarExtras(foundExtras);
     }
 
-    private void processCarConfiguration(UserConfiguration newUserConfiguration, CarFeature carFeature) {
+    private void processCarConfigurationFeature(UserConfiguration newUserConfiguration, CarFeature carFeature) {
         FeatureTypes featureType = carFeature.getFeatureType();
         if (Objects.isNull(carFeature.getId()) || carFeature.getId() <= 0) {
             carFeature = carFeatureRepository.findFirstByFeatureTypeOrderByPriceAsc(carFeature.getFeatureType());
         } else {
-            carFeature = carFeatureRepository.findById(carFeature.getId())
+            carFeature = carFeatureRepository.findByIdAndFeatureType(carFeature.getId(),carFeature.getFeatureType())
                     .orElseThrow(() -> new IllegalArgumentException("No Type Found"));
         }
         newUserConfiguration.setPrice(newUserConfiguration.getPrice() + carFeature.getPrice());

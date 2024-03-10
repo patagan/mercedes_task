@@ -7,4 +7,4 @@
         Empty list of Configurations
     }
 </div>
-<app-configuration-dialog [selectedCar] = "selectedCar" [displayDialog] = "displayDialog" (showEvent)="cancel($event)" (saveEvent)="saveConfiguration($event)" (updateSelectedCarEvent)="onUpdateSelectedCar($event)"></app-configuration-dialog>
+<app-configuration-dialog [selectedCar] = "selectedCar" [displayDialog] = "displayDialog" [carAvailableFeatures]= "carAvailableFeatures"(cancelEvent)="cancel($event)" (showEvent)="getAllCarFeatures()" (saveEvent)="saveConfiguration($event)" (updateSelectedCarEvent)="onUpdateSelectedCar($event)"></app-configuration-dialog>
