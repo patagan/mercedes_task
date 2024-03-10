@@ -3,7 +3,7 @@ package com.mvp.kfz.service.implementation;
 import com.mvp.kfz.data.LoginInput;
 import com.mvp.kfz.data.entity.Users;
 import com.mvp.kfz.repository.UserRepository;
-import com.mvp.kfz.service.IUserService;
+import com.mvp.kfz.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -32,8 +32,7 @@ public class UserService implements IUserService {
 
     @Override
     public Users getUserById(Long userId) {
-        Users users = userRepository.findById(userId).orElseThrow();
-        return users;
+        return userRepository.findById(userId).orElseThrow();
     }
 
 }

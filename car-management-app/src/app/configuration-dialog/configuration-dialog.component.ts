@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ConfigurationDialogComponent {
   @Input()
-  selectedCar!:CarConfiguration;
+  selectedCar:CarConfiguration = new CarConfiguration();
 
   @Input()
   displayDialog!: boolean;

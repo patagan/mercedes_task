@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM node:14 as builder
+FROM node:20.11.1 as builder
 
 WORKDIR /app
 
@@ -10,12 +10,12 @@ RUN npm install
 
 COPY . .
 
-RUN ng build --prod
+RUN ng build
 
 # Stage 2: Serve the Angular application using NGINX
 FROM nginx:alpine
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist/car-management-app/browser /usr/share/nginx/html
 
 EXPOSE 80
 
