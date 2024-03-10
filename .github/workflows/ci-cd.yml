@@ -1,0 +1,27 @@
+name: CI/CD Pipeline for car-management-app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.11.1'
+
+      - name: Install dependencies
+        working-directory: ./car-management-app
+        run: npm install
+
+      - name: Build
+        working-directory: ./car-management-app
+        run: npm test
