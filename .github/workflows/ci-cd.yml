@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-
+permissions: write-all
 jobs:
   test-frontend:
     runs-on: ubuntu-latest
