@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./car-management-app
-        run: cd npm install
+        run: npm install
 
       - name: Build
         working-directory: ./car-management-app
