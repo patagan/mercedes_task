@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  test-frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +22,26 @@ jobs:
         working-directory: ./car-management-app
         run: npm install
 
-      - name: Build
+      - name: Run Unit Tests
         working-directory: ./car-management-app
         run: npm test
+  deploy-frontend:
+    needs: test-frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        working-directory: ./car-management-app
+        run: docker build -t docker.pkg.github.com/${{ github.repository }}/car-management-app:latest .
+
+      - name: Push Docker image to GitHub Packages
+        run: docker push docker.pkg.github.com/${{ github.repository }}/car-management-app:latest
 
   build-backend:
     name: Build
@@ -43,21 +60,21 @@ jobs:
       - name: Build with Gradle
         working-directory: ./mercedes-kfz
         run: ./gradlew build
-
-  test-backend:
-    name: Test
+  deploy-backend:
+    needs: build-backend
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+      - name: Login to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      - name: Test with Gradle
+      - name: Build Docker image
         working-directory: ./mercedes-kfz
-        run: ./gradlew test
+        run: docker build -t docker.pkg.github.com/${{ github.repository }}/mercedes-kfz:latest .
+
+      - name: Push Docker image to GitHub Packages
+        run: docker push docker.pkg.github.com/${{ github.repository }}/mercedes-kzf:latest
+
