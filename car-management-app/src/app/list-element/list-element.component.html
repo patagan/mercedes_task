@@ -10,7 +10,9 @@
         } 
     </ng-template>
     <ng-template pTemplate="footer">
+        <p-confirmDialog></p-confirmDialog>
         <p-button label="Edit" icon="pi pi-pencil" (click)="onEdit()"></p-button>
-        <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="onDelete()" [style]="{ 'margin-left': '.5em' }"></p-button>
+        <p-button label="Delete" icon="pi pi-trash" severity="danger" (click)="confirm2($event)" [style]="{ 'margin-left': '.5em' }"></p-button>
     </ng-template>
 </p-card>
+
