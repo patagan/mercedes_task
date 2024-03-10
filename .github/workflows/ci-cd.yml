@@ -76,5 +76,5 @@ jobs:
         run: docker build -t docker.pkg.github.com/${{ github.repository }}/mercedes-kfz:latest .
 
       - name: Push Docker image to GitHub Packages
-        run: docker push docker.pkg.github.com/${{ github.repository }}/mercedes-kzf:latest
+        run: docker push docker.pkg.github.com/${{ github.repository }}/mercedes-kfz:latest
 
