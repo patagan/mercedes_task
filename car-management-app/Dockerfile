@@ -15,6 +15,7 @@ RUN ng build
 # Stage 2: Serve the Angular application using NGINX
 FROM nginx:alpine
 
+COPY default.conf /etc/nginx/conf.d
 COPY --from=builder /app/dist/car-management-app/browser /usr/share/nginx/html
 
 EXPOSE 80
