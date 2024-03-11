@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Unit Tests
         working-directory: ./car-management-app
-        run: npm test && npm build
+        run: npm test && npm run build
   deploy-frontend:
     needs: build-frontend
     runs-on: ubuntu-latest
