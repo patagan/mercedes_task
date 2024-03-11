@@ -1,13 +1,13 @@
 version: '3'
 services:
   frontend:
-    build: ./car-management-app
-    #image: ghcr.io/patagan/mercedes_task/car-management-app:latest
+    # build: ./car-management-app
+    image: ghcr.io/patagan/mercedes_task/car-management-app:latest
     ports:
       - "4200:80"
   backend:
-    build: ./mercedes-kfz
-    #image: ghcr.io/patagan/mercedes_task/mercedes-kfz:latest
+    #build: ./mercedes-kfz
+    image: ghcr.io/patagan/mercedes_task/mercedes-kfz:latest
     ports:
       - "8080:8080"
     depends_on:
