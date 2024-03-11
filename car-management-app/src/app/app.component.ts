@@ -8,8 +8,7 @@ import { MessageService } from 'primeng/api';
   standalone: true,
   imports: [RouterOutlet, ToastModule],
   providers:[MessageService],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'car-management-app';

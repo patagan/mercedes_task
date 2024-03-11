@@ -7,8 +7,7 @@ import { MenubarModule } from 'primeng/menubar';
   selector: 'app-header',
   standalone: true,
   imports: [RouterModule, MenubarModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   menuItems = [

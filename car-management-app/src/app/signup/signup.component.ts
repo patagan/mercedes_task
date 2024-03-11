@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -11,16 +11,16 @@ import { User } from '../shared/user.model';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [InputTextModule, PasswordModule, ButtonModule,FormsModule],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+  imports: [InputTextModule, PasswordModule, ButtonModule,FormsModule,RouterModule],
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent {
   userLogin:User = new User('','');
 
   constructor(private router: Router, private userService: UserService, private messageService: MessageService) {}
 
-  signup() {
+  signup(signeupForm:NgForm) {
+    if(!signeupForm.valid) return
     this.userService.register(this.userLogin)
     .subscribe({
       next: () => {

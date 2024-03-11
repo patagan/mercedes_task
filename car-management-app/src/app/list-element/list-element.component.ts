@@ -10,7 +10,6 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
   standalone: true,
   imports: [ButtonModule,CardModule, ConfirmDialogModule],
   templateUrl: './list-element.component.html',
-  styleUrl: './list-element.component.scss',
   providers: [ConfirmationService] 
 })
 export class ListElementComponent {

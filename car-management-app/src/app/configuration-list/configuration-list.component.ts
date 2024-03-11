@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
   selector: 'app-configuration-list',
   standalone: true,
   imports: [ButtonModule,CardModule, ListElementComponent,HeaderComponent, ConfigurationDialogComponent],
-  templateUrl: './configuration-list.component.html',
-  styleUrls: ['./configuration-list.component.scss']
+  templateUrl: './configuration-list.component.html'
 })
 export class ConfigurationListComponent implements OnInit {
 

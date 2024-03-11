@@ -14,8 +14,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-configuration-dialog',
   standalone: true,
   imports: [DialogModule, FormsModule,ButtonModule,InputTextModule, DropdownModule,MultiSelectModule, CommonModule],
-  templateUrl: './configuration-dialog.component.html',
-  styleUrl: './configuration-dialog.component.scss'
+  templateUrl: './configuration-dialog.component.html'
 })
 export class ConfigurationDialogComponent {
   @Input()

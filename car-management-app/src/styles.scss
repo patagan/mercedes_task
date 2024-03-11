@@ -1,2 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-box {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-button {
+  width: 100%;
+}
+
+.p-field {
+  margin-bottom: 20px;
+}
+
+.list-element {
+    width: '360px';
+}
+.extra-list {
+    margin-left: 20px;
+}
+
+.column {
+  float: left;
+  padding: 1%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.block-margins {
+  margin: 10px;
+}
+.price-text {
+  font-size: 24px; 
+  font-weight: bold; 
+  color: #333; 
+  margin-bottom: 10px;
+}
+
+.price-difference-text {
+  font-size: 24px; 
+  font-weight: bold; 
+  margin-bottom: 10px;
+}
+
+.positive {
+  color: green; /* Green color for positive numbers */
+}
+
+.negative {
+  color: red; /* Red color for negative numbers */
+}
