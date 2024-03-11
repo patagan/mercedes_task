@@ -17,6 +17,7 @@ services:
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: mypassword
     restart: always
+    entrypoint: /bin/sh -c 'sleep 10 && java -jar /app/spring-boot-application.jar'
   db:
     image: mysql:latest
     restart: always
@@ -27,5 +28,6 @@ services:
       MYSQL_ROOT_PASSWORD: mypassword
     ports:
       - "3306:3306"
+    # Enable volumes to keep the data in a back up
     #volumes:
     #  - ./mysql-data:/var/lib/mysql

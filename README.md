@@ -36,6 +36,8 @@ Run the docker-compose
 docker-compose up -d
 ```
 
+The docker compose changes the entrypoint of the backend to wait 10s for the database to be available.
+
 ## Usage
 
 Open a web browser and navigate to http://localhost:8080/swagger-ui/index.html to test the backend endpoints.
