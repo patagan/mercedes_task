@@ -36,7 +36,7 @@ Run the docker-compose
 docker-compose up -d
 ```
 
-The docker compose changes the entrypoint of the backend to wait 10s for the database to be available.
+The docker compose changes the entrypoint of the backend to wait 15s for the database to be available.
 
 ## Usage
 
