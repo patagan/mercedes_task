@@ -1,6 +1,6 @@
-# Mercedes KFZ
+# Mercedes Task
 
-Welcome to Mercedes KFZ, a Spring Boot and angular project for managing car configurations.
+Welcome to Mercedes Task, a Spring Boot and angular project for managing car configurations.
 
 ## Table of Contents
 - [Introduction](#introduction)
